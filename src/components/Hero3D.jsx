@@ -18,8 +18,8 @@ import { gsap } from 'gsap'
 import * as THREE from 'three'
 import './Hero3D.css'
 
-// Import 3D model - Vite will bundle it correctly
-import paganModel from '../assets/pagani-zonda-r.glb?url'
+// 3D model from public folder - Vercel will serve it directly
+const paganModel = '/pagani-zonda-r.glb'
 
 /**
  * 3D Car Model Component
