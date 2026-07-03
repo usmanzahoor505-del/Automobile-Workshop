@@ -11,6 +11,7 @@ const PageLoader = () => {
     // Progress animation - 3.5 seconds
     const duration = 3500
     const startTime = Date.now()
+    let animationFrame
 
     const animateProgress = () => {
       const elapsed = Date.now() - startTime
@@ -18,37 +19,48 @@ const PageLoader = () => {
       progress.set(newProgress)
 
       if (newProgress < 100) {
-        requestAnimationFrame(animateProgress)
+        animationFrame = requestAnimationFrame(animateProgress)
       } else {
-        setTimeout(() => setLoading(false), 200)
+        // Complete - hide loader
+        setTimeout(() => {
+          setLoading(false)
+        }, 300)
       }
     }
 
-    requestAnimationFrame(animateProgress)
+    animationFrame = requestAnimationFrame(animateProgress)
 
-    // Backup timer
-    const timer = setTimeout(() => {
+    // Backup timer - ensure it always closes
+    const backupTimer = setTimeout(() => {
       setLoading(false)
-    }, duration + 300)
+    }, duration + 500)
 
-    // Also hide on any user interaction (click/scroll)
+    // Also hide on any user interaction (click/scroll/touch)
     const handleInteraction = () => {
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame)
+      }
+      clearTimeout(backupTimer)
       setLoading(false)
-      clearTimeout(timer)
     }
 
     window.addEventListener('click', handleInteraction, { once: true })
     window.addEventListener('scroll', handleInteraction, { once: true })
     window.addEventListener('touchstart', handleInteraction, { once: true })
+    window.addEventListener('keydown', handleInteraction, { once: true })
 
     // Cleanup
     return () => {
-      clearTimeout(timer)
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame)
+      }
+      clearTimeout(backupTimer)
       window.removeEventListener('click', handleInteraction)
       window.removeEventListener('scroll', handleInteraction)
       window.removeEventListener('touchstart', handleInteraction)
+      window.removeEventListener('keydown', handleInteraction)
     }
-  }, [])
+  }, [progress])
 
   return (
     <AnimatePresence mode="wait">
@@ -56,8 +68,8 @@ const PageLoader = () => {
         <motion.div
           className="page-loader"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
+          exit={{ opacity: 0, scale: 1.05 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
         >
           <motion.div className="loader-content">
             <motion.div
