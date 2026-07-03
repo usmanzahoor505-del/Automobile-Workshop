@@ -60,7 +60,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 10;
 }
 
 .hero3d-canvas-wrapper canvas {
@@ -158,7 +158,7 @@
 
 .hero3d-content {
   position: relative;
-  z-index: 2;
+  z-index: 5;
   width: 100%;
   max-width: 1400px;
   padding: 0 40px;
@@ -178,7 +178,7 @@
 /* Title styling */
 .hero3d-title {
   font-size: clamp(3rem, 8vw, 7rem);
-  font-weight: 900;
+  font-weight: 800;
   line-height: 0.9;
   letter-spacing: -0.02em;
   text-transform: uppercase;
@@ -190,11 +190,11 @@
 
 .title-line {
   display: block;
-  color: #ffffff;
-  opacity: 0.3;
+  color: #d0d0d0;
+  opacity: 0.15;
   text-shadow:
-    0 0 20px rgba(255, 255, 255, 0.15),
-    0 2px 10px rgba(0, 0, 0, 0.8);
+    0 0 10px rgba(208, 208, 208, 0.08),
+    0 1px 5px rgba(0, 0, 0, 0.5);
   animation: titleFadeIn 1s ease-out forwards;
 }
 
@@ -211,11 +211,11 @@
 }
 
 .title-line.highlight {
-  color: #cc0000;
-  opacity: 0.3;
+  color: #aa0000;
+  opacity: 0.12;
   text-shadow:
-    0 0 20px rgba(204, 0, 0, 0.3),
-    0 2px 10px rgba(0, 0, 0, 0.8);
+    0 0 10px rgba(170, 0, 0, 0.15),
+    0 1px 5px rgba(0, 0, 0, 0.5);
 }
 
 @keyframes titleFadeIn {
@@ -232,13 +232,13 @@
 /* Subtitle */
 .hero3d-subtitle {
   font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-  font-weight: 600;
-  color: #b0b0b0;
-  opacity: 0.3;
+  font-weight: 500;
+  color: #a0a0a0;
+  opacity: 0.2;
   letter-spacing: 0.05em;
   line-height: 1.8;
   margin-bottom: 50px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);
 }
 
 /* CTA Buttons */
@@ -266,11 +266,11 @@
 }
 
 .hero3d-cta.primary {
-  background: #cc0000;
-  color: #ffffff;
-  border: 2px solid #cc0000;
-  box-shadow: 0 4px 20px rgba(204, 0, 0, 0.4);
-  opacity: 0.4;
+  background: rgba(170, 0, 0, 0.7);
+  color: rgba(255, 255, 255, 0.85);
+  border: 2px solid rgba(170, 0, 0, 0.6);
+  box-shadow: 0 4px 20px rgba(170, 0, 0, 0.2);
+  opacity: 0.5;
 }
 
 .hero3d-cta.primary::before {
@@ -296,9 +296,9 @@
 
 .hero3d-cta.secondary {
   background: transparent;
-  color: #ffffff;
-  border: 2px solid rgba(192, 192, 192, 0.5);
-  opacity: 0.3;
+  color: rgba(255, 255, 255, 0.7);
+  border: 2px solid rgba(192, 192, 192, 0.35);
+  opacity: 0.4;
 }
 
 .hero3d-cta.secondary:hover {
@@ -375,18 +375,18 @@
 
 .spec-value {
   font-size: 2rem;
-  font-weight: 900;
-  color: #cc0000;
-  opacity: 0.3;
+  font-weight: 800;
+  color: #aa0000;
+  opacity: 0.2;
   line-height: 1;
-  text-shadow: 0 0 15px rgba(204, 0, 0, 0.3);
+  text-shadow: 0 0 10px rgba(170, 0, 0, 0.15);
 }
 
 .spec-label {
   font-size: 0.65rem;
-  font-weight: 700;
-  color: #808080;
-  opacity: 0.3;
+  font-weight: 600;
+  color: #707070;
+  opacity: 0.2;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -415,18 +415,18 @@
 
 .badge-label {
   font-size: 0.6rem;
-  font-weight: 700;
-  color: #808080;
-  opacity: 0.3;
+  font-weight: 600;
+  color: #707070;
+  opacity: 0.2;
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
 
 .badge-value {
   font-size: 0.85rem;
-  font-weight: 900;
-  color: #cc0000;
-  opacity: 0.3;
+  font-weight: 800;
+  color: #aa0000;
+  opacity: 0.2;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
