@@ -269,15 +269,77 @@
 }
 
 @media (max-width: 375px) {
+  .booking {
+    padding: 40px 10px;
+  }
+
   .booking-form-wrapper {
-    padding: 1rem 0.6rem;
+    padding: 1rem 0.7rem;
+  }
+
+  .form-group label {
+    font-size: 0.85rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 0.8rem;
+    padding: 0.75rem;
+  }
+
+  .submit-btn {
+    padding: 0.9rem;
+    font-size: 0.85rem;
+  }
+
+  .info-card {
+    padding: 1rem;
   }
 
   .info-card h3 {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .info-card p {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .booking {
+    padding: 35px 8px;
+  }
+
+  .booking-form-wrapper {
+    padding: 0.9rem 0.6rem;
+  }
+
+  .form-group label {
+    font-size: 0.8rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 0.75rem;
+    padding: 0.7rem;
+  }
+
+  .submit-btn {
+    padding: 0.85rem;
+    font-size: 0.8rem;
+  }
+
+  .info-card {
+    padding: 0.9rem;
+  }
+
+  .info-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .info-card p {
+    font-size: 0.75rem;
   }
 }

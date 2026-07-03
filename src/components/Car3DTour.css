@@ -504,20 +504,134 @@
 }
 
 @media (max-width: 375px) {
+  .car-tour {
+    padding: 40px 10px;
+  }
+
   .car-image-container {
-    height: 250px;
+    height: 240px;
+  }
+
+  .view-info {
+    left: 12px;
+    bottom: 12px;
   }
 
   .view-title {
-    font-size: 1.1rem;
+    font-size: 1rem;
+  }
+
+  .view-subtitle {
+    font-size: 0.65rem;
+  }
+
+  .view-description {
+    font-size: 0.8rem;
   }
 
   .thumbnail {
-    width: 65px;
-    height: 45px;
+    width: 60px;
+    height: 40px;
   }
 
   .thumbnail-strip {
     gap: 8px;
+  }
+
+  .thumbnail-overlay {
+    font-size: 0.6rem;
+    padding: 6px;
+  }
+
+  .nav-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .fullscreen-btn {
+    width: 40px;
+    height: 40px;
+    top: 12px;
+    right: 12px;
+  }
+
+  .spec-value {
+    font-size: 2.2rem;
+  }
+
+  .spec-label {
+    font-size: 0.7rem;
+  }
+
+  .tour-cta {
+    padding: 25px 10px;
+  }
+
+  .cta-btn {
+    padding: 16px 35px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .car-tour {
+    padding: 35px 8px;
+  }
+
+  .car-image-container {
+    height: 220px;
+  }
+
+  .view-info {
+    left: 10px;
+    bottom: 10px;
+  }
+
+  .view-title {
+    font-size: 0.95rem;
+  }
+
+  .view-subtitle {
+    font-size: 0.6rem;
+  }
+
+  .view-description {
+    font-size: 0.75rem;
+  }
+
+  .thumbnail {
+    width: 55px;
+    height: 38px;
+  }
+
+  .thumbnail-strip {
+    gap: 6px;
+  }
+
+  .nav-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .fullscreen-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .spec-value {
+    font-size: 2rem;
+  }
+
+  .spec-label {
+    font-size: 0.65rem;
+  }
+
+  .tour-cta {
+    padding: 20px 8px;
+  }
+
+  .cta-btn {
+    padding: 14px 30px;
+    font-size: 0.75rem;
   }
 }

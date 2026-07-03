@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Hero from './components/Hero'
+import Hero3D from './components/Hero3D'
 import Navbar from './components/Navbar'
 import Services from './components/Services'
 import Car3DTour from './components/Car3DTour'
@@ -30,7 +30,7 @@ function App() {
       {ENABLE_LOADER && !loaderComplete && <PageLoader onComplete={handleLoaderComplete} />}
       <div className="app" style={{ opacity: loaderComplete ? 1 : 0, transition: 'opacity 0.5s ease' }}>
         <Navbar />
-        <Hero />
+        <Hero3D />
         <Car3DTour />
         <Services />
         <About />

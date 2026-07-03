@@ -238,15 +238,64 @@
 }
 
 @media (max-width: 375px) {
+  .services {
+    padding: 40px 12px;
+  }
+
   .service-card {
-    padding: 25px 12px;
+    padding: 25px 15px;
+  }
+
+  .service-icon {
+    width: 40px;
+    height: 40px;
   }
 
   .service-card h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .service-card p {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .services-cta {
+    padding: 30px 15px;
+  }
+
+  .services-cta h2 {
+    font-size: 1.3rem;
+  }
+
+  .services-cta p {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .services {
+    padding: 35px 10px;
+  }
+
+  .service-card {
+    padding: 20px 12px;
+  }
+
+  .service-icon {
+    width: 35px;
+    height: 35px;
+  }
+
+  .service-card h3 {
+    font-size: 0.95rem;
+  }
+
+  .service-card p {
+    font-size: 0.7rem;
+  }
+
+  .services-cta {
+    padding: 25px 12px;
   }
 }

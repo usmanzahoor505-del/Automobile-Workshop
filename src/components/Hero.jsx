@@ -4,6 +4,13 @@ import { ChevronDown } from 'lucide-react'
 import { gsap } from 'gsap'
 import './Hero.css'
 
+// Import car images from assets
+import car1 from '../assets/1.jpg'
+import car2 from '../assets/2.jpg'
+import car3 from '../assets/3.jpg'
+import car4 from '../assets/4.jpg'
+import car5 from '../assets/5.jpg'
+
 const Hero = () => {
   const heroRef = useRef(null)
   const carImageRef = useRef(null)
@@ -25,17 +32,10 @@ const Hero = () => {
   const carOpacity = useTransform(scrollYProgress, [0, 0.7, 1], [1, 0.7, 0])
 
 
-  // Car image angles - 5 different cars
-  const carImages = [
-    '/car1.jpg',
-    '/car2.jpg',
-    '/car3.jpg',
-    '/car4.jpg',
-    '/car5.jpg'
-  ]
+  // Car image angles - 5 different cars from assets
+  const carImages = [car1, car2, car3, car4, car5]
 
-
-  // Cross-fade between car angles on scroll (5 cars)
+  // Scroll-based car switching (5 cars)
   useEffect(() => {
     const unsubscribe = scrollYProgress.on('change', (latest) => {
       if (latest < 0.2) {
@@ -137,7 +137,7 @@ const Hero = () => {
           </motion.div>
         </motion.div>
 
-        {/* Car Visual with Scroll Parallax */}
+        {/* Car Visual with 5 Images */}
         <motion.div
           className="hero-car-container"
           ref={carImageRef}
@@ -152,7 +152,7 @@ const Hero = () => {
           <div className="car-light-left"></div>
           <div className="car-light-right"></div>
 
-          {/* Car Images with Cross-fade and Mouse Parallax */}
+          {/* Car Images - 5 cars with cross-fade */}
           {carImages.map((image, index) => (
             <motion.div
               key={index}
@@ -168,9 +168,6 @@ const Hero = () => {
                 src={image}
                 alt={`Elite Auto Lab - Premium Car ${index + 1}`}
                 className="hero-car-image"
-                onError={(e) => {
-                  e.target.src = '/car-placeholder.svg'
-                }}
                 loading={index === 0 ? "eager" : "lazy"}
                 decoding="async"
               />
