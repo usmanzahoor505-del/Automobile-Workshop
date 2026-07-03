@@ -18,8 +18,8 @@ import { gsap } from 'gsap'
 import * as THREE from 'three'
 import './Hero3D.css'
 
-// 3D model path - Vite will handle as asset
-const paganModel = '/src/assets/pagani-zonda-r.glb'
+// Import 3D model - Vite will bundle it correctly
+import paganModel from '../assets/pagani-zonda-r.glb?url'
 
 /**
  * 3D Car Model Component
