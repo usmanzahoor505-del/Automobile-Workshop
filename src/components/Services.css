@@ -171,13 +171,82 @@
 
   .services-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .service-card {
-    padding: 50px 30px;
+    padding: 40px 25px;
   }
 
   .services-cta {
-    padding: 60px 30px;
+    padding: 50px 25px;
+  }
+}
+
+@media (max-width: 640px) {
+  .services {
+    padding: 60px 15px;
+  }
+
+  .services-grid {
+    gap: 15px;
+  }
+
+  .service-card {
+    padding: 35px 20px;
+  }
+
+  .service-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .service-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .service-card p {
+    font-size: 0.85rem;
+  }
+
+  .services-cta {
+    padding: 40px 20px;
+  }
+
+  .services-cta h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .services {
+    padding: 50px 10px;
+  }
+
+  .service-card {
+    padding: 30px 15px;
+  }
+
+  .service-icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  .services-cta {
+    padding: 35px 15px;
+  }
+}
+
+@media (max-width: 375px) {
+  .service-card {
+    padding: 25px 12px;
+  }
+
+  .service-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .service-card p {
+    font-size: 0.8rem;
   }
 }

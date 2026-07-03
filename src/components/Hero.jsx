@@ -171,7 +171,8 @@ const Hero = () => {
                 onError={(e) => {
                   e.target.src = '/car-placeholder.svg'
                 }}
-                loading="eager"
+                loading={index === 0 ? "eager" : "lazy"}
+                decoding="async"
               />
             </motion.div>
           ))}

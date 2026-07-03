@@ -40,6 +40,18 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Mobile performance optimization */
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Inter', sans-serif;
   font-weight: 900;

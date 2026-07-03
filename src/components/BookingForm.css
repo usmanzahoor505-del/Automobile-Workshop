@@ -200,6 +200,10 @@
 }
 
 @media (max-width: 768px) {
+  .booking {
+    padding: 80px 20px;
+  }
+
   .booking-form-wrapper {
     padding: 2rem 1.5rem;
   }
@@ -210,5 +214,70 @@
 
   .booking-info {
     gap: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .booking {
+    padding: 60px 15px;
+  }
+
+  .booking-form-wrapper {
+    padding: 1.5rem 1rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 0.9rem;
+    padding: 0.9rem;
+  }
+
+  .submit-btn {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .info-card {
+    padding: 1.5rem;
+  }
+
+  .info-card h3 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .booking {
+    padding: 50px 10px;
+  }
+
+  .booking-form-wrapper {
+    padding: 1.2rem 0.8rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 0.85rem;
+    padding: 0.8rem;
+  }
+
+  .info-card {
+    padding: 1.2rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .booking-form-wrapper {
+    padding: 1rem 0.6rem;
+  }
+
+  .info-card h3 {
+    font-size: 1rem;
+  }
+
+  .info-card p {
+    font-size: 0.85rem;
   }
 }

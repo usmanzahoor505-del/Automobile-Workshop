@@ -363,17 +363,19 @@
   color: #ffffff;
 }
 
-/* Responsive */
+/* Responsive - Mobile Optimizations */
 @media (max-width: 968px) {
   .hero {
     padding: 100px 20px 60px;
+    min-height: 120vh;
   }
 
   .hero-specs {
     flex-direction: column;
     gap: 25px;
-    padding: 35px 25px;
+    padding: 25px 20px;
     width: auto;
+    backdrop-filter: blur(10px);
   }
 
   .spec-divider {
@@ -391,14 +393,27 @@
   }
 
   .hero-car-container {
-    height: 450px;
+    height: 400px;
     margin: 30px 0 40px;
+    padding: 20px;
+  }
+
+  .hero-car-image {
+    transform: scale(1.05);
   }
 
   .car-light-left,
   .car-light-right {
-    width: 400px;
-    height: 400px;
+    width: 300px;
+    height: 300px;
+    filter: blur(60px);
+    display: none; /* Disable on mobile for performance */
+  }
+
+  .hero-car-container::before {
+    width: 500px;
+    height: 500px;
+    filter: blur(50px);
   }
 
   .hero-cta-group {
@@ -412,24 +427,110 @@
     width: 100%;
     max-width: 320px;
     padding: 18px 40px;
+    font-size: 0.8rem;
   }
 
   .hero-philosophy {
-    padding: 35px 25px;
+    padding: 30px 20px;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 8vw, 3.5rem);
+  }
+
+  .hero-tagline {
+    font-size: clamp(0.75rem, 1.5vw, 0.9rem);
   }
 }
 
 @media (max-width: 640px) {
+  .hero {
+    min-height: 100vh;
+    padding: 80px 15px 40px;
+  }
+
   .hero-specs {
     gap: 20px;
-    padding: 30px 20px;
+    padding: 20px 15px;
   }
 
   .spec-value {
     font-size: 2rem;
   }
 
+  .spec-label {
+    font-size: 0.6rem;
+  }
+
   .hero-car-container {
-    height: 350px;
+    height: 300px;
+    margin: 20px 0 30px;
+  }
+
+  .hero-car-image {
+    transform: scale(1);
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    max-width: 280px;
+    padding: 16px 30px;
+    font-size: 0.75rem;
+  }
+
+  .hero-philosophy {
+    padding: 25px 15px;
+  }
+
+  .hero-philosophy p {
+    font-size: clamp(1rem, 4vw, 1.5rem);
+  }
+
+  .philosophy-sub {
+    font-size: clamp(0.65rem, 1.2vw, 0.8rem);
+  }
+
+  .scroll-indicator {
+    bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 70px 10px 30px;
+  }
+
+  .hero-specs {
+    padding: 18px 12px;
+    gap: 15px;
+  }
+
+  .spec-value {
+    font-size: 1.8rem;
+  }
+
+  .spec-label {
+    font-size: 0.55rem;
+  }
+
+  .hero-car-container {
+    height: 250px;
+    padding: 10px;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    max-width: 100%;
+    padding: 14px 25px;
+  }
+}
+
+@media (max-width: 375px) {
+  .hero-car-container {
+    height: 220px;
+  }
+
+  .spec-value {
+    font-size: 1.5rem;
   }
 }

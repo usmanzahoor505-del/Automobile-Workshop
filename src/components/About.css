@@ -118,6 +118,10 @@
 }
 
 @media (max-width: 768px) {
+  .about {
+    padding: 80px 20px;
+  }
+
   .about-stats {
     flex-direction: column;
     gap: 2rem;
@@ -130,5 +134,47 @@
 
   .feature-icon {
     margin: 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .about {
+    padding: 60px 15px;
+  }
+
+  .stat-item h3 {
+    font-size: 1.8rem;
+  }
+
+  .stat-item p {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about {
+    padding: 50px 10px;
+  }
+
+  .about-stats {
+    gap: 1.5rem;
+  }
+
+  .stat-item h3 {
+    font-size: 1.5rem;
+  }
+
+  .feature-item h3 {
+    font-size: 1rem;
+  }
+
+  .feature-item p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .stat-item h3 {
+    font-size: 1.3rem;
   }
 }

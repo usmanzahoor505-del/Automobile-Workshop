@@ -424,20 +424,100 @@
 }
 
 @media (max-width: 640px) {
+  .car-tour {
+    padding: 60px 15px;
+  }
+
   .car-image-container {
-    height: 400px;
+    height: 350px;
   }
 
   .view-title {
     font-size: 1.5rem;
   }
 
+  .view-subtitle {
+    font-size: 0.7rem;
+  }
+
   .thumbnail {
-    width: 100px;
-    height: 65px;
+    width: 90px;
+    height: 60px;
+  }
+
+  .thumbnail-strip {
+    gap: 10px;
   }
 
   .tour-cta {
-    padding: 40px 20px;
+    padding: 35px 15px;
+  }
+
+  .spec-grid {
+    gap: 15px;
+  }
+
+  .nav-btn {
+    width: 45px;
+    height: 45px;
+  }
+
+  .fullscreen-btn {
+    width: 45px;
+    height: 45px;
+    top: 15px;
+    right: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .car-tour {
+    padding: 50px 10px;
+  }
+
+  .car-image-container {
+    height: 300px;
+  }
+
+  .view-info {
+    left: 15px;
+    bottom: 15px;
+  }
+
+  .view-title {
+    font-size: 1.3rem;
+  }
+
+  .thumbnail {
+    width: 75px;
+    height: 50px;
+  }
+
+  .nav-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .tour-cta {
+    padding: 30px 10px;
+  }
+}
+
+@media (max-width: 375px) {
+  .car-image-container {
+    height: 250px;
+  }
+
+  .view-title {
+    font-size: 1.1rem;
+  }
+
+  .thumbnail {
+    width: 65px;
+    height: 45px;
+  }
+
+  .thumbnail-strip {
+    gap: 8px;
   }
 }
