@@ -5,7 +5,12 @@ import './PageLoader.css'
 const PageLoader = ({ onComplete }) => {
   const [loading, setLoading] = useState(true)
   const progress = useMotionValue(0)
-  const carLeft = useTransform(progress, [0, 100], ['0%', 'calc(100% - 30px)'])
+
+  // Transform progress to percentage string for width
+  const progressWidth = useTransform(progress, (v) => `${v}%`)
+
+  // Transform progress to car position (moves with filled bar)
+  const carLeft = useTransform(progress, (v) => `calc(${v}% - ${v * 0.3}px)`)
 
   useEffect(() => {
     // Progress animation - 3.5 seconds
@@ -101,7 +106,7 @@ const PageLoader = ({ onComplete }) => {
               <motion.div
                 className="loader-progress-fill"
                 style={{
-                  width: useTransform(progress, (v) => `${v}%`)
+                  width: progressWidth
                 }}
               />
 
