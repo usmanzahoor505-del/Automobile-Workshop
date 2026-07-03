@@ -25,7 +25,7 @@ const paganModel = '/src/assets/pagani-zonda-r.glb'
  * 3D Car Model Component
  * Loads and displays the Pagani Zonda R with mouse interaction
  */
-function CarModel({ mousePosition, scrollProgress }) {
+function CarModel({ mousePosition, scrollProgress, onLoaded }) {
   const carRef = useRef()
   const { scene } = useGLTF(paganModel)
 
@@ -65,8 +65,13 @@ function CarModel({ mousePosition, scrollProgress }) {
       const maxDim = Math.max(size.x, size.y, size.z)
       const scale = 2.5 / maxDim
       clonedScene.scale.setScalar(scale)
+
+      // Notify parent that model is loaded
+      if (onLoaded) {
+        onLoaded()
+      }
     }
-  }, [clonedScene])
+  }, [clonedScene, onLoaded])
 
   // Animate based on mouse position and scroll
   useFrame((state, delta) => {
@@ -97,7 +102,7 @@ function CarModel({ mousePosition, scrollProgress }) {
  * 3D Scene Component
  * Sets up camera, lights, environment, and the car model
  */
-function Scene({ mousePosition, scrollProgress }) {
+function Scene({ mousePosition, scrollProgress, onModelLoaded }) {
   return (
     <>
       {/* Main Camera */}
@@ -150,7 +155,11 @@ function Scene({ mousePosition, scrollProgress }) {
 
       {/* Car Model */}
       <Suspense fallback={null}>
-        <CarModel mousePosition={mousePosition} scrollProgress={scrollProgress} />
+        <CarModel
+          mousePosition={mousePosition}
+          scrollProgress={scrollProgress}
+          onLoaded={onModelLoaded}
+        />
       </Suspense>
     </>
   )
@@ -163,10 +172,29 @@ function LoadingFallback() {
   return (
     <div className="hero3d-loading">
       <div className="loading-spinner"></div>
-      <p>LOADING 3D MODEL...</p>
+      <p>LOADING 3D EXPERIENCE...</p>
       <div className="loading-bar">
         <div className="loading-progress"></div>
       </div>
+      <p style={{ fontSize: '0.65rem', marginTop: '15px', opacity: 0.6 }}>
+        Click anywhere to continue
+      </p>
+    </div>
+  )
+}
+
+/**
+ * Error Fallback Component
+ */
+function ErrorFallback() {
+  return (
+    <div className="hero3d-loading">
+      <p style={{ color: '#cc0000', marginBottom: '15px' }}>
+        3D MODEL UNAVAILABLE
+      </p>
+      <p style={{ fontSize: '0.8rem', opacity: 0.7 }}>
+        Premium workshop experience continues below
+      </p>
     </div>
   )
 }
@@ -179,6 +207,7 @@ const Hero3D = () => {
   const mousePosition = useRef({ x: 0, y: 0 })
   const [isCanvasReady, setIsCanvasReady] = useState(false)
   const [isModelLoaded, setIsModelLoaded] = useState(false)
+  const [hasError, setHasError] = useState(false)
 
   // Scroll progress tracking
   const { scrollYProgress } = useScroll({
@@ -248,15 +277,33 @@ const Hero3D = () => {
     }, '-=0.3')
   }, [])
 
-  // Model loaded handler
-  useEffect(() => {
-    // Simulate model loading progress
-    const timer = setTimeout(() => {
-      setIsModelLoaded(true)
-    }, 2000)
+  // Handle model loaded callback
+  const handleModelLoaded = () => {
+    console.log('3D Model loaded successfully')
+    setIsModelLoaded(true)
+    setHasError(false)
+  }
 
-    return () => clearTimeout(timer)
-  }, [])
+  // Safety timeout - if model doesn't load in 8 seconds, show error
+  useEffect(() => {
+    const safetyTimer = setTimeout(() => {
+      if (!isModelLoaded && !hasError) {
+        console.warn('Model loading timeout - showing error fallback')
+        setHasError(true)
+        setIsModelLoaded(true) // Hide loading spinner
+      }
+    }, 8000) // 8 second timeout
+
+    return () => clearTimeout(safetyTimer)
+  }, [isModelLoaded, hasError])
+
+  // Click to skip loader
+  const handleSkipLoader = () => {
+    if (!isModelLoaded) {
+      console.log('User skipped loader')
+      setIsModelLoaded(true)
+    }
+  }
 
   return (
     <section className="hero3d" id="hero3d" ref={heroRef}>
@@ -270,24 +317,41 @@ const Hero3D = () => {
       <motion.div
         className="hero3d-canvas-wrapper"
         style={{ y, opacity, scale }}
+        onClick={handleSkipLoader}
       >
-        <Canvas
-          shadows
-          camera={{ position: [0, 0, 5], fov: 50 }}
-          gl={{
-            antialias: true,
-            alpha: true,
-            powerPreference: 'high-performance',
-            toneMapping: THREE.ACESFilmicToneMapping,
-            toneMappingExposure: 1.2
-          }}
-          dpr={[1, 2]}
-          onCreated={() => setIsCanvasReady(true)}
-        >
-          <Scene mousePosition={mousePosition} scrollProgress={scrollYProgress} />
-        </Canvas>
+        {!hasError ? (
+          <Canvas
+            shadows
+            camera={{ position: [0, 0, 5], fov: 50 }}
+            gl={{
+              antialias: true,
+              alpha: true,
+              powerPreference: 'high-performance',
+              toneMapping: THREE.ACESFilmicToneMapping,
+              toneMappingExposure: 1.2
+            }}
+            dpr={[1, 2]}
+            onCreated={() => {
+              console.log('Canvas created')
+              setIsCanvasReady(true)
+            }}
+            onError={(error) => {
+              console.error('Canvas error:', error)
+              setHasError(true)
+              setIsModelLoaded(true)
+            }}
+          >
+            <Scene
+              mousePosition={mousePosition}
+              scrollProgress={scrollYProgress}
+              onModelLoaded={handleModelLoaded}
+            />
+          </Canvas>
+        ) : (
+          <ErrorFallback />
+        )}
 
-        {!isModelLoaded && <LoadingFallback />}
+        {!isModelLoaded && !hasError && <LoadingFallback />}
       </motion.div>
 
       {/* Content Overlay */}
@@ -394,7 +458,15 @@ const Hero3D = () => {
   )
 }
 
-// Preload the 3D model
-useGLTF.preload(paganModel)
+// Preload the 3D model only in production after user interaction
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
+  // Delay preload to not block initial page load
+  setTimeout(() => {
+    useGLTF.preload(paganModel)
+  }, 2000)
+} else {
+  // Preload immediately in development
+  useGLTF.preload(paganModel)
+}
 
 export default Hero3D
