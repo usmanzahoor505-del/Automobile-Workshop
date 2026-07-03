@@ -444,9 +444,19 @@
     font-size: clamp(2.5rem, 7vw, 4rem);
   }
 
+  /* Increase text opacity for better mobile readability */
+  .title-line {
+    opacity: 0.25;
+  }
+
+  .title-line.highlight {
+    opacity: 0.2;
+  }
+
   .hero3d-subtitle {
     font-size: clamp(0.85rem, 1.3vw, 1rem);
     margin-bottom: 40px;
+    opacity: 0.35;
   }
 
   .hero3d-cta-group {
@@ -460,6 +470,14 @@
     max-width: 300px;
     padding: 16px 35px;
     font-size: 0.8rem;
+  }
+
+  .hero3d-cta.primary {
+    opacity: 0.65;
+  }
+
+  .hero3d-cta.secondary {
+    opacity: 0.55;
   }
 
   .hero3d-hint {
@@ -480,6 +498,11 @@
 
   .spec-value {
     font-size: 1.5rem;
+    opacity: 0.35;
+  }
+
+  .spec-label {
+    opacity: 0.35;
   }
 
   .spec-divider {
@@ -490,6 +513,11 @@
     bottom: 30px;
     left: 30px;
     padding: 12px 16px;
+  }
+
+  .badge-label,
+  .badge-value {
+    opacity: 0.35;
   }
 }
 
@@ -503,14 +531,32 @@
     margin-bottom: 20px;
   }
 
+  /* Better readability on small screens */
+  .title-line {
+    opacity: 0.3;
+  }
+
+  .title-line.highlight {
+    opacity: 0.25;
+  }
+
   .hero3d-subtitle {
     font-size: 0.8rem;
     margin-bottom: 30px;
+    opacity: 0.4;
   }
 
   .hero3d-cta {
     padding: 14px 30px;
     font-size: 0.75rem;
+  }
+
+  .hero3d-cta.primary {
+    opacity: 0.7;
+  }
+
+  .hero3d-cta.secondary {
+    opacity: 0.6;
   }
 
   .hero3d-hint {
@@ -530,10 +576,12 @@
 
   .spec-value {
     font-size: 1.3rem;
+    opacity: 0.4;
   }
 
   .spec-label {
     font-size: 0.6rem;
+    opacity: 0.4;
   }
 
   .hero3d-badge {
@@ -544,6 +592,11 @@
 
   .badge-value {
     font-size: 0.75rem;
+  }
+
+  .badge-label,
+  .badge-value {
+    opacity: 0.4;
   }
 }
 
@@ -561,10 +614,20 @@
     margin-bottom: 15px;
   }
 
+  /* Enhanced readability for small phones */
+  .title-line {
+    opacity: 0.35;
+  }
+
+  .title-line.highlight {
+    opacity: 0.3;
+  }
+
   .hero3d-subtitle {
     font-size: 0.75rem;
     line-height: 1.5;
     margin-bottom: 25px;
+    opacity: 0.45;
   }
 
   .hero3d-cta-group {
@@ -577,6 +640,14 @@
     font-size: 0.7rem;
     max-width: 100%;
     width: 100%;
+  }
+
+  .hero3d-cta.primary {
+    opacity: 0.75;
+  }
+
+  .hero3d-cta.secondary {
+    opacity: 0.65;
   }
 
   .hero3d-specs {
@@ -593,10 +664,12 @@
 
   .spec-value {
     font-size: 1.2rem;
+    opacity: 0.45;
   }
 
   .spec-label {
     font-size: 0.55rem;
+    opacity: 0.45;
   }
 
   .hero3d-badge {
@@ -613,6 +686,11 @@
     font-size: 0.7rem;
   }
 
+  .badge-label,
+  .badge-value {
+    opacity: 0.45;
+  }
+
   .hero3d-scroll-indicator {
     bottom: 20px;
     font-size: 0.6rem;
@@ -626,14 +704,32 @@
     margin-bottom: 12px;
   }
 
+  /* Maximum readability for tiny screens */
+  .title-line {
+    opacity: 0.4;
+  }
+
+  .title-line.highlight {
+    opacity: 0.35;
+  }
+
   .hero3d-subtitle {
     font-size: 0.7rem;
     line-height: 1.4;
+    opacity: 0.5;
   }
 
   .hero3d-cta {
     padding: 10px 18px;
     font-size: 0.65rem;
+  }
+
+  .hero3d-cta.primary {
+    opacity: 0.8;
+  }
+
+  .hero3d-cta.secondary {
+    opacity: 0.7;
   }
 
   .hero3d-specs {
@@ -644,10 +740,17 @@
 
   .spec-value {
     font-size: 1rem;
+    opacity: 0.5;
   }
 
   .spec-label {
     font-size: 0.5rem;
+    opacity: 0.5;
+  }
+
+  .badge-label,
+  .badge-value {
+    opacity: 0.5;
   }
 }
 
@@ -657,13 +760,31 @@
     font-size: 1.3rem;
   }
 
+  /* Full readability for ultra-small screens */
+  .title-line {
+    opacity: 0.45;
+  }
+
+  .title-line.highlight {
+    opacity: 0.4;
+  }
+
   .hero3d-subtitle {
     font-size: 0.65rem;
+    opacity: 0.55;
   }
 
   .hero3d-cta {
     padding: 10px 15px;
     font-size: 0.6rem;
+  }
+
+  .hero3d-cta.primary {
+    opacity: 0.85;
+  }
+
+  .hero3d-cta.secondary {
+    opacity: 0.75;
   }
 
   .hero3d-specs {
@@ -672,6 +793,16 @@
 
   .spec-value {
     font-size: 0.9rem;
+    opacity: 0.55;
+  }
+
+  .spec-label {
+    opacity: 0.55;
+  }
+
+  .badge-label,
+  .badge-value {
+    opacity: 0.55;
   }
 }
 
