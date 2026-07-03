@@ -27,21 +27,19 @@ const paganModel = '/pagani-zonda-r.glb'
  */
 function CarModel({ mousePosition, scrollProgress, onLoaded }) {
   const carRef = useRef()
-  const { scene } = useGLTF(paganModel)
+  const gltf = useGLTF("/pagani-zonda-r.glb")
 
-  // Clone the scene to avoid conflicts
-  const clonedScene = scene.clone()
-
-  // Setup materials for premium look
+  // Setup model on load
   useEffect(() => {
-    if (clonedScene) {
-      clonedScene.traverse((child) => {
+    if (gltf && gltf.scene) {
+      console.log('GLTF Model loaded:', gltf)
+
+      // Traverse and enhance materials
+      gltf.scene.traverse((child) => {
         if (child.isMesh) {
-          // Enable shadows
           child.castShadow = true
           child.receiveShadow = true
 
-          // Enhance materials
           if (child.material) {
             child.material.envMapIntensity = 1.5
             child.material.metalness = 0.9
@@ -51,49 +49,42 @@ function CarModel({ mousePosition, scrollProgress, onLoaded }) {
         }
       })
 
-      // Center and scale the model
-      const box = new THREE.Box3().setFromObject(clonedScene)
+      // Center and scale
+      const box = new THREE.Box3().setFromObject(gltf.scene)
       const center = box.getCenter(new THREE.Vector3())
       const size = box.getSize(new THREE.Vector3())
 
-      // Center the model
-      clonedScene.position.x = -center.x
-      clonedScene.position.y = -center.y
-      clonedScene.position.z = -center.z
+      gltf.scene.position.x = -center.x
+      gltf.scene.position.y = -center.y
+      gltf.scene.position.z = -center.z
 
-      // Scale to fit
       const maxDim = Math.max(size.x, size.y, size.z)
       const scale = 2.5 / maxDim
-      clonedScene.scale.setScalar(scale)
+      gltf.scene.scale.setScalar(scale)
 
-      // Notify parent that model is loaded
+      // Notify loaded
       if (onLoaded) {
         onLoaded()
       }
     }
-  }, [clonedScene, onLoaded])
+  }, [gltf, onLoaded])
 
-  // Animate based on mouse position and scroll
+  // Animate
   useFrame((state, delta) => {
     if (carRef.current && mousePosition.current) {
-      // Mouse rotation
       const targetRotationY = mousePosition.current.x * Math.PI * 0.5
       const targetRotationX = mousePosition.current.y * Math.PI * 0.1
 
       carRef.current.rotation.y += (targetRotationY - carRef.current.rotation.y) * 0.05
       carRef.current.rotation.x += (targetRotationX - carRef.current.rotation.x) * 0.05
-
-      // Continuous slow rotation when mouse is idle
       carRef.current.rotation.y += delta * 0.1
-
-      // Subtle hover animation
       carRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.05
     }
   })
 
   return (
     <group ref={carRef}>
-      <primitive object={clonedScene} />
+      <primitive object={gltf.scene} />
     </group>
   )
 }
@@ -458,15 +449,7 @@ const Hero3D = () => {
   )
 }
 
-// Preload the 3D model only in production after user interaction
-if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
-  // Delay preload to not block initial page load
-  setTimeout(() => {
-    useGLTF.preload(paganModel)
-  }, 2000)
-} else {
-  // Preload immediately in development
-  useGLTF.preload(paganModel)
-}
+// Preload the 3D model
+useGLTF.preload("/pagani-zonda-r.glb")
 
 export default Hero3D
