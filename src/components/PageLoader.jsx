@@ -2,7 +2,7 @@ import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-mo
 import { useState, useEffect } from 'react'
 import './PageLoader.css'
 
-const PageLoader = () => {
+const PageLoader = ({ onComplete }) => {
   const [loading, setLoading] = useState(true)
   const progress = useMotionValue(0)
   const carLeft = useTransform(progress, [0, 100], ['0%', 'calc(100% - 30px)'])
@@ -24,6 +24,7 @@ const PageLoader = () => {
         // Complete - hide loader
         setTimeout(() => {
           setLoading(false)
+          if (onComplete) onComplete()
         }, 300)
       }
     }
@@ -33,6 +34,7 @@ const PageLoader = () => {
     // Backup timer - ensure it always closes
     const backupTimer = setTimeout(() => {
       setLoading(false)
+      if (onComplete) onComplete()
     }, duration + 500)
 
     // Also hide on any user interaction (click/scroll/touch)
@@ -42,6 +44,7 @@ const PageLoader = () => {
       }
       clearTimeout(backupTimer)
       setLoading(false)
+      if (onComplete) onComplete()
     }
 
     window.addEventListener('click', handleInteraction, { once: true })
