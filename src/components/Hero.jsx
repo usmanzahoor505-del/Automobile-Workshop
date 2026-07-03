@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { gsap } from 'gsap'
 import './Hero.css'
@@ -8,8 +8,6 @@ const Hero = () => {
   const heroRef = useRef(null)
   const carImageRef = useRef(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -26,13 +24,6 @@ const Hero = () => {
   const carScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.1, 1.2])
   const carOpacity = useTransform(scrollYProgress, [0, 0.7, 1], [1, 0.7, 0])
 
-  // Smooth mouse movement
-  const springConfig = { damping: 25, stiffness: 100 }
-  const smoothMouseX = useSpring(mouseX, springConfig)
-  const smoothMouseY = useSpring(mouseY, springConfig)
-
-  const carParallaxX = useTransform(smoothMouseX, [-1, 1], [-20, 20])
-  const carParallaxY = useTransform(smoothMouseY, [-1, 1], [-10, 10])
 
   // Car image angles - 5 different cars
   const carImages = [
@@ -43,17 +34,6 @@ const Hero = () => {
     '/car5.jpg'
   ]
 
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      const { clientX, clientY } = e
-      const { innerWidth, innerHeight } = window
-      mouseX.set((clientX / innerWidth) * 2 - 1)
-      mouseY.set((clientY / innerHeight) * 2 - 1)
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [mouseX, mouseY])
 
   // Cross-fade between car angles on scroll (5 cars)
   useEffect(() => {
@@ -179,11 +159,9 @@ const Hero = () => {
               className="hero-car-image-wrapper"
               initial={{ opacity: 0 }}
               animate={{ opacity: currentImageIndex === index ? 1 : 0 }}
-              transition={{ duration: 1, ease: 'easeInOut' }}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
               style={{
-                position: index > 0 ? 'absolute' : 'relative',
-                x: carParallaxX,
-                y: carParallaxY
+                position: index > 0 ? 'absolute' : 'relative'
               }}
             >
               <img
