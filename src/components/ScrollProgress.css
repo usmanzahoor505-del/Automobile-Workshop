@@ -1,0 +1,144 @@
+/* Fixed Progress Bar - sits on top of navbar */
+.scroll-progress-bar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  z-index: 10000;
+  background: rgba(20, 20, 20, 0.8);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  overflow: visible;
+}
+
+/* Filled progress bar */
+.scroll-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #ff0000 0%, #cc0000 50%, #ff0000 100%);
+  box-shadow:
+    0 0 15px rgba(255, 0, 0, 0.8),
+    inset 0 0 8px rgba(255, 100, 100, 0.3);
+  will-change: transform;
+}
+
+/* Animated shine effect on bar */
+.scroll-progress-fill::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Car Marker - positioned at exact fill percentage */
+.car-progress-marker {
+  position: absolute;
+  top: -16px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: left;
+  z-index: 10001;
+  transition: none;
+}
+
+/* Car SVG Icon */
+.car-marker-icon {
+  width: 100%;
+  height: 100%;
+  filter:
+    drop-shadow(0 2px 6px rgba(0, 0, 0, 0.8))
+    drop-shadow(0 0 10px rgba(255, 0, 0, 0.6));
+  transform: scaleX(1.1);
+}
+
+/* Progress Percentage Text */
+.progress-text-display {
+  position: fixed;
+  top: 12px;
+  right: 20px;
+  z-index: 10001;
+  font-size: 0.85rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #ff0000;
+  text-transform: uppercase;
+  background: rgba(10, 10, 10, 0.95);
+  padding: 6px 14px;
+  border: 1.5px solid rgba(255, 0, 0, 0.5);
+  border-radius: 3px;
+  backdrop-filter: blur(15px);
+  font-family: 'Inter', monospace;
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .scroll-progress-bar-fixed {
+    height: 6px;
+  }
+
+  .car-progress-marker {
+    top: -14px;
+    width: 35px;
+    height: 35px;
+  }
+
+  .progress-text-display {
+    top: 10px;
+    right: 15px;
+    font-size: 0.75rem;
+    padding: 5px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .scroll-progress-bar-fixed {
+    height: 5px;
+  }
+
+  .car-progress-marker {
+    top: -12px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .progress-text-display {
+    display: none;
+  }
+}
+
+/* Ensure bar is visible above navbar */
+.navbar {
+  z-index: 9999 !important;
+}
+
+/* SVG gradient definition for glow */
+svg defs {
+  position: absolute;
+}

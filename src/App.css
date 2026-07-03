@@ -1,0 +1,17 @@
+.app {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--dark);
+}
+
+/* Global section styles */
+section {
+  width: 100%;
+  padding: 80px 20px;
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 60px 20px;
+  }
+}
