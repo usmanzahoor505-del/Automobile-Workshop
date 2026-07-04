@@ -27,7 +27,7 @@ const paganModel = '/pagani-zonda-r.glb'
  */
 function CarModel({ mousePosition, scrollProgress, onLoaded }) {
   const carRef = useRef()
-  const gltf = useGLTF("/hummer-h3.glb")
+  const gltf = useGLTF("/free_2010_hummer_h3.glb")
 
   // Safety check
   if (!gltf || !gltf.scene) {
@@ -454,6 +454,6 @@ const Hero3D = () => {
 }
 
 // Preload the 3D model
-useGLTF.preload("/hummer-h3.glb")
+useGLTF.preload("/free_2010_hummer_h3.glb")
 
 export default Hero3D
