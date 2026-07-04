@@ -29,14 +29,9 @@ function CarModel({ mousePosition, scrollProgress, onLoaded }) {
   const carRef = useRef()
   const gltf = useGLTF("/hummer-h3.glb")
 
-  // Setup model on load
+  // Setup model on load - EXACTLY like working Pagani setup
   useEffect(() => {
-    console.log('CarModel useEffect triggered, gltf:', gltf)
     if (gltf && gltf.scene) {
-      console.log('✅ GLTF Model loaded successfully!')
-      console.log('Scene:', gltf.scene)
-      console.log('Children:', gltf.scene.children)
-
       // Traverse and enhance materials
       gltf.scene.traverse((child) => {
         if (child.isMesh) {
@@ -44,16 +39,15 @@ function CarModel({ mousePosition, scrollProgress, onLoaded }) {
           child.receiveShadow = true
 
           if (child.material) {
-            // Realistic Hummer materials
-            child.material.envMapIntensity = 1.0
-            child.material.metalness = 0.3
-            child.material.roughness = 0.7
+            child.material.envMapIntensity = 1.5
+            child.material.metalness = 0.9
+            child.material.roughness = 0.2
             child.material.needsUpdate = true
           }
         }
       })
 
-      // Center and scale for Hummer H3
+      // Center and scale - SAME as Pagani
       const box = new THREE.Box3().setFromObject(gltf.scene)
       const center = box.getCenter(new THREE.Vector3())
       const size = box.getSize(new THREE.Vector3())
@@ -63,24 +57,13 @@ function CarModel({ mousePosition, scrollProgress, onLoaded }) {
       gltf.scene.position.z = -center.z
 
       const maxDim = Math.max(size.x, size.y, size.z)
-      const scale = 3.5 / maxDim // Increased scale for Hummer
+      const scale = 2.5 / maxDim
       gltf.scene.scale.setScalar(scale)
-
-      // Rotate Hummer to face forward
-      gltf.scene.rotation.y = Math.PI / 2
-
-      console.log('✅ Model positioned and scaled')
-      console.log('Scale:', gltf.scene.scale)
-      console.log('Position:', gltf.scene.position)
-      console.log('Rotation:', gltf.scene.rotation)
 
       // Notify loaded
       if (onLoaded) {
-        console.log('✅ Calling onLoaded callback')
         onLoaded()
       }
-    } else {
-      console.warn('⚠️ gltf or gltf.scene is undefined')
     }
   }, [gltf, onLoaded])
 
@@ -97,14 +80,6 @@ function CarModel({ mousePosition, scrollProgress, onLoaded }) {
     }
   })
 
-  // Don't render until model is loaded
-  if (!gltf || !gltf.scene) {
-    console.log('⏳ Waiting for model to load...')
-    return null
-  }
-
-  console.log('🎨 Rendering Hummer H3')
-
   return (
     <group ref={carRef}>
       <primitive object={gltf.scene} />
@@ -119,35 +94,41 @@ function CarModel({ mousePosition, scrollProgress, onLoaded }) {
 function Scene({ mousePosition, scrollProgress, onModelLoaded }) {
   return (
     <>
-      {/* Main Camera - adjusted for Hummer */}
-      <PerspectiveCamera makeDefault position={[0, 0, 6]} fov={55} />
+      {/* Main Camera - SAME as Pagani */}
+      <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={50} />
 
-      {/* Studio Lighting Setup - Optimized for Hummer */}
-      <ambientLight intensity={0.8} />
+      {/* Studio Lighting Setup - SAME as Pagani */}
+      <ambientLight intensity={0.5} />
 
       {/* Key Light - Main light source from front-right */}
-      <directionalLight
+      <spotLight
         position={[10, 10, 10]}
-        intensity={1.5}
+        angle={0.3}
+        penumbra={1}
+        intensity={2}
         castShadow
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
       />
 
       {/* Fill Light - Softens shadows from left */}
-      <directionalLight
+      <spotLight
         position={[-10, 5, 5]}
-        intensity={0.8}
+        angle={0.4}
+        penumbra={1}
+        intensity={1}
       />
 
       {/* Back Light - Creates rim lighting */}
-      <directionalLight
+      <spotLight
         position={[0, 5, -10]}
-        intensity={1.0}
+        angle={0.5}
+        penumbra={1}
+        intensity={1.5}
       />
 
       {/* Top Light - Highlights from above */}
-      <pointLight position={[0, 15, 0]} intensity={1.2} />
+      <pointLight position={[0, 10, 0]} intensity={0.8} />
 
       {/* HDR Environment for reflections */}
       <Environment preset="city" />
