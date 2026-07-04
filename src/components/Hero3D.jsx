@@ -44,9 +44,10 @@ function CarModel({ mousePosition, scrollProgress, onLoaded }) {
           child.receiveShadow = true
 
           if (child.material) {
-            child.material.envMapIntensity = 1.5
-            child.material.metalness = 0.9
-            child.material.roughness = 0.2
+            // Realistic Hummer materials
+            child.material.envMapIntensity = 1.0
+            child.material.metalness = 0.3
+            child.material.roughness = 0.7
             child.material.needsUpdate = true
           }
         }
@@ -121,38 +122,32 @@ function Scene({ mousePosition, scrollProgress, onModelLoaded }) {
       {/* Main Camera - adjusted for Hummer */}
       <PerspectiveCamera makeDefault position={[0, 0, 6]} fov={55} />
 
-      {/* Studio Lighting Setup */}
-      <ambientLight intensity={0.5} />
+      {/* Studio Lighting Setup - Optimized for Hummer */}
+      <ambientLight intensity={0.8} />
 
       {/* Key Light - Main light source from front-right */}
-      <spotLight
+      <directionalLight
         position={[10, 10, 10]}
-        angle={0.3}
-        penumbra={1}
-        intensity={2}
+        intensity={1.5}
         castShadow
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
       />
 
       {/* Fill Light - Softens shadows from left */}
-      <spotLight
+      <directionalLight
         position={[-10, 5, 5]}
-        angle={0.4}
-        penumbra={1}
-        intensity={1}
+        intensity={0.8}
       />
 
       {/* Back Light - Creates rim lighting */}
-      <spotLight
+      <directionalLight
         position={[0, 5, -10]}
-        angle={0.5}
-        penumbra={1}
-        intensity={1.5}
+        intensity={1.0}
       />
 
       {/* Top Light - Highlights from above */}
-      <pointLight position={[0, 10, 0]} intensity={0.8} />
+      <pointLight position={[0, 15, 0]} intensity={1.2} />
 
       {/* HDR Environment for reflections */}
       <Environment preset="city" />

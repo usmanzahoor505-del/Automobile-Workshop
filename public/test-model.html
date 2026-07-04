@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hummer H3 Direct Test</title>
+  <style>
+    body { margin: 0; background: #0a0a0a; overflow: hidden; }
+    canvas { display: block; }
+    #info {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      color: white;
+      font-family: monospace;
+      background: rgba(0,0,0,0.8);
+      padding: 10px;
+      font-size: 12px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div id="info">Loading Hummer H3...</div>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    const info = document.getElementById('info');
+
+    // Scene
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x1a1a1a);
+
+    // Camera
+    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(5, 2, 5);
+
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = true;
+    document.body.appendChild(renderer.domElement);
+
+    // Controls
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+
+    // Lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(10, 10, 10);
+    directionalLight.castShadow = true;
+    scene.add(directionalLight);
+
+    const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.5);
+    directionalLight2.position.set(-10, 5, 5);
+    scene.add(directionalLight2);
+
+    const directionalLight3 = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight3.position.set(0, 5, -10);
+    scene.add(directionalLight3);
+
+    // Grid helper
+    const gridHelper = new THREE.GridHelper(20, 20);
+    scene.add(gridHelper);
+
+    // Axes helper
+    const axesHelper = new THREE.AxesHelper(5);
+    scene.add(axesHelper);
+
+    // Load Hummer
+    const loader = new GLTFLoader();
+    let hummer = null;
+
+    loader.load(
+      '/hummer-h3.glb',
+      (gltf) => {
+        hummer = gltf.scene;
+
+        info.innerHTML = '✅ Hummer H3 Loaded!<br>';
+
+        // Log structure
+        console.log('Model loaded:', gltf);
+        info.innerHTML += `Children: ${gltf.scene.children.length}<br>`;
+
+        // Calculate bounds
+        const box = new THREE.Box3().setFromObject(hummer);
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
+
+        info.innerHTML += `Size: ${size.x.toFixed(2)} x ${size.y.toFixed(2)} x ${size.z.toFixed(2)}<br>`;
+        info.innerHTML += `Center: ${center.x.toFixed(2)}, ${center.y.toFixed(2)}, ${center.z.toFixed(2)}<br>`;
+
+        // Center model
+        hummer.position.x = -center.x;
+        hummer.position.y = -center.y;
+        hummer.position.z = -center.z;
+
+        // Scale
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = 3 / maxDim;
+        hummer.scale.setScalar(scale);
+
+        info.innerHTML += `Scale: ${scale.toFixed(3)}<br>`;
+        info.innerHTML += `Max dimension: ${maxDim.toFixed(2)}<br>`;
+
+        // Add to scene
+        scene.add(hummer);
+
+        info.innerHTML += '<br>✅ Model visible!<br>Use mouse to rotate';
+
+        // Point camera at model
+        controls.target.copy(center);
+        controls.update();
+      },
+      (progress) => {
+        const percent = (progress.loaded / progress.total * 100).toFixed(0);
+        info.innerHTML = `Loading: ${percent}%`;
+      },
+      (error) => {
+        info.innerHTML = `❌ Error: ${error.message}`;
+        console.error('Load error:', error);
+      }
+    );
+
+    // Animation
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Handle resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
