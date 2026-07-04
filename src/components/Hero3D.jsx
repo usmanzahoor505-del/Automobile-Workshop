@@ -23,11 +23,11 @@ const paganModel = '/pagani-zonda-r.glb'
 
 /**
  * 3D Car Model Component
- * Loads and displays the Pagani Zonda R with mouse interaction
+ * Loads and displays the Hummer H3 with mouse interaction
  */
 function CarModel({ mousePosition, scrollProgress, onLoaded }) {
   const carRef = useRef()
-  const gltf = useGLTF("/pagani-zonda-r.glb")
+  const gltf = useGLTF("/hummer-h3.glb")
 
   // Setup model on load
   useEffect(() => {
@@ -450,6 +450,6 @@ const Hero3D = () => {
 }
 
 // Preload the 3D model
-useGLTF.preload("/pagani-zonda-r.glb")
+useGLTF.preload("/hummer-h3.glb")
 
 export default Hero3D
