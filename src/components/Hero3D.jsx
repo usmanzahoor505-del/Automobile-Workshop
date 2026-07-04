@@ -49,7 +49,7 @@ function CarModel({ mousePosition, scrollProgress, onLoaded }) {
         }
       })
 
-      // Center and scale
+      // Center and scale for Hummer H3
       const box = new THREE.Box3().setFromObject(gltf.scene)
       const center = box.getCenter(new THREE.Vector3())
       const size = box.getSize(new THREE.Vector3())
@@ -59,8 +59,11 @@ function CarModel({ mousePosition, scrollProgress, onLoaded }) {
       gltf.scene.position.z = -center.z
 
       const maxDim = Math.max(size.x, size.y, size.z)
-      const scale = 2.5 / maxDim
+      const scale = 3.5 / maxDim // Increased scale for Hummer
       gltf.scene.scale.setScalar(scale)
+
+      // Rotate Hummer to face forward
+      gltf.scene.rotation.y = Math.PI / 2
 
       // Notify loaded
       if (onLoaded) {
@@ -96,8 +99,8 @@ function CarModel({ mousePosition, scrollProgress, onLoaded }) {
 function Scene({ mousePosition, scrollProgress, onModelLoaded }) {
   return (
     <>
-      {/* Main Camera */}
-      <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={50} />
+      {/* Main Camera - adjusted for Hummer */}
+      <PerspectiveCamera makeDefault position={[0, 0, 6]} fov={55} />
 
       {/* Studio Lighting Setup */}
       <ambientLight intensity={0.5} />
