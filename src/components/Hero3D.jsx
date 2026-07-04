@@ -31,8 +31,11 @@ function CarModel({ mousePosition, scrollProgress, onLoaded }) {
 
   // Setup model on load
   useEffect(() => {
+    console.log('CarModel useEffect triggered, gltf:', gltf)
     if (gltf && gltf.scene) {
-      console.log('GLTF Model loaded:', gltf)
+      console.log('✅ GLTF Model loaded successfully!')
+      console.log('Scene:', gltf.scene)
+      console.log('Children:', gltf.scene.children)
 
       // Traverse and enhance materials
       gltf.scene.traverse((child) => {
@@ -65,10 +68,18 @@ function CarModel({ mousePosition, scrollProgress, onLoaded }) {
       // Rotate Hummer to face forward
       gltf.scene.rotation.y = Math.PI / 2
 
+      console.log('✅ Model positioned and scaled')
+      console.log('Scale:', gltf.scene.scale)
+      console.log('Position:', gltf.scene.position)
+      console.log('Rotation:', gltf.scene.rotation)
+
       // Notify loaded
       if (onLoaded) {
+        console.log('✅ Calling onLoaded callback')
         onLoaded()
       }
+    } else {
+      console.warn('⚠️ gltf or gltf.scene is undefined')
     }
   }, [gltf, onLoaded])
 
@@ -84,6 +95,14 @@ function CarModel({ mousePosition, scrollProgress, onLoaded }) {
       carRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.05
     }
   })
+
+  // Don't render until model is loaded
+  if (!gltf || !gltf.scene) {
+    console.log('⏳ Waiting for model to load...')
+    return null
+  }
+
+  console.log('🎨 Rendering Hummer H3')
 
   return (
     <group ref={carRef}>
