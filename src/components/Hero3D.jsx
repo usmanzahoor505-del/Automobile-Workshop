@@ -29,6 +29,12 @@ function CarModel({ mousePosition, scrollProgress, onLoaded }) {
   const carRef = useRef()
   const gltf = useGLTF("/hummer-h3.glb")
 
+  // Safety check
+  if (!gltf || !gltf.scene) {
+    console.warn("Model not ready yet")
+    return null
+  }
+
   // Setup model on load - EXACTLY like working Pagani setup
   useEffect(() => {
     if (gltf && gltf.scene) {
