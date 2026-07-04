@@ -1,0 +1,149 @@
+/* Hero3D Simple - Premium Layered Effect */
+
+/* Fix overflow to allow 3D model to float above text */
+.hero3d-simple {
+  overflow: visible !important;
+}
+
+/* Enhanced text visibility when 3D model is in front */
+.hero3d-simple .hero3d-title .title-line {
+  color: #d0d0d0;
+  opacity: 0.25 !important;
+  text-shadow:
+    0 0 20px rgba(208, 208, 208, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.8),
+    0 4px 16px rgba(0, 0, 0, 0.6);
+  font-weight: 900;
+}
+
+.hero3d-simple .hero3d-title .title-line.highlight {
+  color: #cc0000;
+  opacity: 0.20 !important;
+  text-shadow:
+    0 0 30px rgba(204, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.8),
+    0 4px 16px rgba(0, 0, 0, 0.6);
+}
+
+/* Enhanced subtitle */
+.hero3d-simple .hero3d-subtitle {
+  color: #b0b0b0;
+  opacity: 0.35 !important;
+  text-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.8),
+    0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* CTA Button - ensure clickable above everything */
+.hero3d-simple .hero3d-cta {
+  position: relative;
+  z-index: 50;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* ============================================
+   RESPONSIVE - All Devices
+   ============================================ */
+
+/* Large Desktop (1440px+) */
+@media (min-width: 1440px) {
+  .hero3d-simple .hero3d-title .title-line {
+    font-size: 7rem;
+  }
+}
+
+/* Standard Desktop (1024px - 1439px) - Default styles apply */
+
+/* Tablet Landscape (768px - 1023px) */
+@media (max-width: 1023px) {
+  .hero3d-simple .hero3d-title .title-line {
+    opacity: 0.28 !important;
+  }
+}
+
+/* Tablet Portrait (600px - 767px) */
+@media (max-width: 767px) {
+  .hero3d-simple .hero3d-title .title-line {
+    opacity: 0.30 !important;
+    font-size: clamp(2.5rem, 8vw, 4rem);
+  }
+
+  .hero3d-simple .hero3d-title .title-line.highlight {
+    opacity: 0.25 !important;
+  }
+
+  .hero3d-simple .hero3d-subtitle {
+    font-size: 0.85rem;
+  }
+}
+
+/* Mobile Large (480px - 599px) */
+@media (max-width: 599px) {
+  .hero3d-simple .hero3d-title .title-line {
+    opacity: 0.32 !important;
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .hero3d-simple .hero3d-title .title-line.highlight {
+    opacity: 0.28 !important;
+  }
+
+  .hero3d-simple .hero3d-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .hero3d-simple .hero3d-cta {
+    padding: 14px 30px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Mobile Small (320px - 479px) */
+@media (max-width: 479px) {
+  .hero3d-simple .hero3d-title .title-line {
+    opacity: 0.35 !important;
+    font-size: clamp(1.8rem, 11vw, 2.5rem);
+  }
+
+  .hero3d-simple .hero3d-title .title-line.highlight {
+    opacity: 0.30 !important;
+  }
+
+  .hero3d-simple .hero3d-subtitle {
+    font-size: 0.75rem;
+    padding: 0 10px;
+  }
+
+  .hero3d-simple .hero3d-cta {
+    padding: 12px 24px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Very Small Devices (below 320px) */
+@media (max-width: 319px) {
+  .hero3d-simple .hero3d-title .title-line {
+    opacity: 0.38 !important;
+    font-size: 1.5rem;
+  }
+
+  .hero3d-simple .hero3d-subtitle {
+    font-size: 0.7rem;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero3d-simple {
+    min-height: 100vh;
+  }
+
+  .hero3d-simple .hero3d-title .title-line {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    opacity: 0.30 !important;
+  }
+
+  .hero3d-simple .hero3d-subtitle {
+    font-size: 0.75rem;
+  }
+}

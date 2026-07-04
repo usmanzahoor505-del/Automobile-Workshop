@@ -27,17 +27,20 @@ const paganModel = '/pagani-zonda-r.glb'
  */
 function CarModel({ mousePosition, scrollProgress, onLoaded }) {
   const carRef = useRef()
+  const [modelReady, setModelReady] = useState(false)
+
+  console.log('🔄 CarModel component rendering...')
+
   const gltf = useGLTF("/free_2010_hummer_h3.glb")
 
-  // Safety check
-  if (!gltf || !gltf.scene) {
-    console.warn("Model not ready yet")
-    return null
-  }
+  console.log('📦 GLTF loaded:', gltf ? '✅' : '❌')
+  console.log('🎨 Scene exists:', gltf?.scene ? '✅' : '❌')
 
-  // Setup model on load - EXACTLY like working Pagani setup
+  // Setup model on load - Optimized for Hummer H3
   useEffect(() => {
+    console.log('⚙️ Setup effect running...')
     if (gltf && gltf.scene) {
+      console.log('✅ Model setup started')
       // Traverse and enhance materials
       gltf.scene.traverse((child) => {
         if (child.isMesh) {
@@ -53,29 +56,36 @@ function CarModel({ mousePosition, scrollProgress, onLoaded }) {
         }
       })
 
-      // Center and scale - SAME as Pagani
+      // Center and scale - Adjusted for Hummer H3
       const box = new THREE.Box3().setFromObject(gltf.scene)
       const center = box.getCenter(new THREE.Vector3())
       const size = box.getSize(new THREE.Vector3())
 
+      // Center the model
       gltf.scene.position.x = -center.x
-      gltf.scene.position.y = -center.y
+      gltf.scene.position.y = -center.y - 0.5  // Lower position
       gltf.scene.position.z = -center.z
 
+      // Scale to fit viewport
       const maxDim = Math.max(size.x, size.y, size.z)
-      const scale = 2.5 / maxDim
+      const scale = 3.0 / maxDim  // Slightly bigger
       gltf.scene.scale.setScalar(scale)
 
-      // Notify loaded
+      // Mark as ready and notify
+      console.log('✅ Model setup complete!')
+      setModelReady(true)
       if (onLoaded) {
-        onLoaded()
+        console.log('📢 Calling onLoaded callback')
+        setTimeout(() => onLoaded(), 100)  // Small delay for complete load
       }
+    } else {
+      console.log('⏳ Waiting for model to load...')
     }
   }, [gltf, onLoaded])
 
-  // Animate
+  // Animate - ALWAYS call this hook, even if model not ready
   useFrame((state, delta) => {
-    if (carRef.current && mousePosition.current) {
+    if (carRef.current && mousePosition.current && modelReady) {
       const targetRotationY = mousePosition.current.x * Math.PI * 0.5
       const targetRotationX = mousePosition.current.y * Math.PI * 0.1
 
@@ -85,6 +95,11 @@ function CarModel({ mousePosition, scrollProgress, onLoaded }) {
       carRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.05
     }
   })
+
+  // Safety check - return null AFTER all hooks
+  if (!gltf || !gltf.scene || !modelReady) {
+    return null
+  }
 
   return (
     <group ref={carRef}>
@@ -100,8 +115,8 @@ function CarModel({ mousePosition, scrollProgress, onLoaded }) {
 function Scene({ mousePosition, scrollProgress, onModelLoaded }) {
   return (
     <>
-      {/* Main Camera - SAME as Pagani */}
-      <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={50} />
+      {/* Main Camera - Optimized for Hummer H3 */}
+      <PerspectiveCamera makeDefault position={[3, 1, 6]} fov={45} />
 
       {/* Studio Lighting Setup - SAME as Pagani */}
       <ambientLight intensity={0.5} />
@@ -167,12 +182,12 @@ function LoadingFallback() {
   return (
     <div className="hero3d-loading">
       <div className="loading-spinner"></div>
-      <p>LOADING 3D EXPERIENCE...</p>
+      <p>LOADING 3D MODEL...</p>
       <div className="loading-bar">
         <div className="loading-progress"></div>
       </div>
       <p style={{ fontSize: '0.65rem', marginTop: '15px', opacity: 0.6 }}>
-        Click anywhere to continue
+        Click anywhere to skip
       </p>
     </div>
   )
@@ -274,20 +289,35 @@ const Hero3D = () => {
 
   // Handle model loaded callback
   const handleModelLoaded = () => {
-    console.log('3D Model loaded successfully')
+    console.log('✅ 3D Model loaded successfully')
     setIsModelLoaded(true)
     setHasError(false)
   }
 
-  // Safety timeout - if model doesn't load in 8 seconds, show error
+  // Handle error callback
+  const handleError = (error) => {
+    console.error('❌ 3D Model loading error:', error)
+    setHasError(true)
+    setIsModelLoaded(true)
+  }
+
+  // Log initial state
+  useEffect(() => {
+    console.log('🚀 Hero3D Component Mounted')
+    console.log('📊 Canvas Ready:', isCanvasReady)
+    console.log('📦 Model Loaded:', isModelLoaded)
+    console.log('⚠️ Has Error:', hasError)
+  }, [isCanvasReady, isModelLoaded, hasError])
+
+  // Safety timeout - if model doesn't load in 20 seconds, show error
   useEffect(() => {
     const safetyTimer = setTimeout(() => {
       if (!isModelLoaded && !hasError) {
-        console.warn('Model loading timeout - showing error fallback')
+        console.warn('⚠️ Model loading timeout after 20s - showing error fallback')
         setHasError(true)
         setIsModelLoaded(true) // Hide loading spinner
       }
-    }, 8000) // 8 second timeout
+    }, 20000) // 20 second timeout
 
     return () => clearTimeout(safetyTimer)
   }, [isModelLoaded, hasError])
@@ -317,7 +347,7 @@ const Hero3D = () => {
         {!hasError ? (
           <Canvas
             shadows
-            camera={{ position: [0, 0, 5], fov: 50 }}
+            camera={{ position: [3, 1, 6], fov: 45 }}
             gl={{
               antialias: true,
               alpha: true,
@@ -326,14 +356,15 @@ const Hero3D = () => {
               toneMappingExposure: 1.2
             }}
             dpr={[1, 2]}
-            onCreated={() => {
-              console.log('Canvas created')
+            performance={{ min: 0.5 }}
+            onCreated={(state) => {
+              console.log('✅ Canvas created successfully')
+              state.gl.setClearColor('#000000', 0)
               setIsCanvasReady(true)
             }}
             onError={(error) => {
-              console.error('Canvas error:', error)
-              setHasError(true)
-              setIsModelLoaded(true)
+              console.error('❌ Canvas error:', error)
+              handleError(error)
             }}
           >
             <Scene

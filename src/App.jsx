@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import Hero3D from './components/Hero3D'
+// Testing simple 3D version
+import Hero from './components/Hero3DSimple'
 import Navbar from './components/Navbar'
 import Services from './components/Services'
 import Car3DTour from './components/Car3DTour'
@@ -13,7 +14,7 @@ import './App.css'
 function App() {
   const [loaderComplete, setLoaderComplete] = useState(false)
   // Set to false to disable loader completely
-  const ENABLE_LOADER = true
+  const ENABLE_LOADER = false  // Temporarily disabled for debugging
 
   const handleLoaderComplete = () => {
     setLoaderComplete(true)
@@ -30,7 +31,7 @@ function App() {
       {ENABLE_LOADER && !loaderComplete && <PageLoader onComplete={handleLoaderComplete} />}
       <div className="app" style={{ opacity: loaderComplete ? 1 : 0, transition: 'opacity 0.5s ease' }}>
         <Navbar />
-        <Hero3D />
+        <Hero />
         <Car3DTour />
         <Services />
         <About />
